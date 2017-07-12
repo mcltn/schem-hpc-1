@@ -56,7 +56,7 @@ resource "ibmcloud_infra_virtual_guest" "domaincontroller" {
 }
 
 resource "ibmcloud_infra_virtual_guest" "computenodes" {
-  count = "${var.compute_nodes}"
+  count = "${var.compute_node_count}"
   hostname = "${var.computenode_hostname}${count.index}"
   domain = "${var.domain}"
   image_id = "${data.ibmcloud_infra_image_template.compute_template.id}"
