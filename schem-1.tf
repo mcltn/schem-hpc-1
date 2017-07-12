@@ -68,5 +68,5 @@ resource "ibmcloud_infra_virtual_guest" "computenodes" {
   private_network_only = true,
   hourly_billing = true,
   tags = ["schematics","compute"]
-  user_metadata = "#ps1_sysnative\nscript: |\n<powershell>\nc:\\installs\\configurecomputenode.ps1 -domain ${var.domain} -username ${var.domain_username} -password ${var.domain_password} -dns_server ${ibmcloud_infra_virtual_guest.domaincontroller.ipv4_address_private} -headnode ${var.headnode}\n</powershell>"
+  user_metadata = "#ps1_sysnative\nscript: |\n<powershell>\nc:\\installs\\configurecomputenode.ps1 -domain ${var.domain} -username ${var.domain_username} -password ${var.domain_password} -dns_server ${ibmcloud_infra_virtual_guest.domaincontroller.ipv4_address_private} -headnode ${var.hn_hostname}\n</powershell>"
 }
