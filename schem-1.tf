@@ -9,7 +9,9 @@ variable domain_password {}
 variable dc_hostname {}
 variable hn_hostname {}
 variable cn_hostname {}
-variable compute_node_count {}
+variable domaincontroller_count {}
+variable headnode_count {}
+variable computenode_count {}
 
 provider "ibmcloud" {
   softlayer_username = "${var.softlayer_username}"
@@ -24,7 +26,7 @@ data "ibmcloud_infra_image_template" "compute_template" {
 }
 
 resource "ibmcloud_infra_virtual_guest" "domaincontroller" {
-  count = "1"
+  count = "${var.domaincontroller_count}"
   hostname = "${var.dc_hostname}"
   domain = "${var.domain}"
   image_id = "${data.ibmcloud_infra_image_template.base_template.id}"
@@ -40,7 +42,7 @@ resource "ibmcloud_infra_virtual_guest" "domaincontroller" {
 }
 
 resource "ibmcloud_infra_virtual_guest" "headnode" {
-  count = "0"
+  count = "${var.headnode_count}"
   hostname = "${var.hn_hostname}"
   domain = "${var.domain}"
   image_id = "${data.ibmcloud_infra_image_template.compute_template.id}"
@@ -56,7 +58,7 @@ resource "ibmcloud_infra_virtual_guest" "headnode" {
 }
 
 resource "ibmcloud_infra_virtual_guest" "computenodes" {
-  count = "${var.compute_node_count}"
+  count = "${var.computenode_count}"
   hostname = "${var.cn_hostname}${count.index}"
   domain = "${var.domain}"
   image_id = "${data.ibmcloud_infra_image_template.compute_template.id}"
